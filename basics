@@ -1,0 +1,58 @@
+const fs= require('fs');
+
+//reading files
+
+fs.readFile('C:\\Users\\BUDDHILASIRI\\node.js\\docs\\blog1.txt', (err, data) => {
+    if (err) {
+        console.log(err);
+    }
+    console.log(data.toString());
+});
+
+//writing files
+
+fs.writeFile('C:\\Users\\BUDDHILASIRI\\node.js\\docs\\blog1.txt', 'hello bitch',()=>{
+    console.log('file was written');
+});
+
+//directories
+if (!fs.existsSync('C:\\Users\\BUDDHILASIRI\\node.js\\assets')){
+    fs.mkdir('C:\\Users\\BUDDHILASIRI\\node.js\\assets', (err)=>{
+        if (err){
+            console.log(err);
+        }
+        console.log('file created');
+    });
+}else{
+    fs.rmdir('C:\\Users\\BUDDHILASIRI\\node.js\\assets', (err)=>{
+        if (err) {
+            console.log(err)
+        }
+        console.log('folder deleted');
+    })
+    
+}
+//deleting files
+if (fs.existsSync('C:\\Users\\BUDDHILASIRI\\node.js\\deleteMe.txt')){
+    fs.unlink('C:\\Users\\BUDDHILASIRI\\node.js\\deleteMe.txt', (err) =>{
+        if (err){
+            console.log(err)
+        }
+        console.log("file deleted");
+    })
+}
+
+
+const readStream = fs.createReadStream('C:\\Users\\BUDDHILASIRI\\node.js\\blog3.txt', { encoding: 'utf8'});
+const writeStream = fs.createWriteStream('C:\\Users\\BUDDHILASIRI\\node.js\\blog4.txt');
+
+readStream.on('data', chunk => {
+  // console.log('---- NEW CHUNK ----');
+  // console.log(chunk);
+  writeStream.write('\nNEW CHUNK:\n');
+  writeStream.write(chunk);
+});
+
+//piping
+readStream.pipe(writeStream);
+ 
